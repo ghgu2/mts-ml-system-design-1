@@ -1,0 +1,11 @@
+transaction_time,merch,cat_id,amount,gender,one_city,us_state,lat,lon,population_city,jobs,merchant_lat,merchant_lon
+2019-09-14 02:46,"fraud_Stokes, Christiansen and Sipes",grocery_net,25.79,M,Cross Plains,TX,32.1482,-99.1872,1897,Chief Operating Officer,31.772057,-99.103183
+2019-07-25 20:30,fraud_Thompson-Gleason,health_fitness,87.8,M,Falconer,NY,42.1239,-79.1895,3833,Metallurgist,42.635312,-78.334559
+2020-01-05 17:27,fraud_Friesen Inc,shopping_pos,10.98,F,Altair,TX,29.6047,-96.5249,106,"Editor, film/video",29.363782,-95.624994
+2019-07-21 00:14,"fraud_Jenkins, Hauck and Friesen",gas_transport,71.97,F,Marietta,SC,35.0296,-82.5136,5648,Museum/gallery exhibitions officer,35.142659,-82.489028
+2019-03-13 00:45,"fraud_Kovacek, Dibbert and Ondricka",grocery_pos,210.5,F,Tyler,TX,32.2768,-95.3031,144160,Sports development officer,31.833016,-94.746542
+2019-01-22 18:29,fraud_Renner Ltd,home,76.08,F,Minneapolis,MN,45.0632,-93.3811,1022298,Analytical chemist,45.065055,-94.245252
+2019-03-24 10:35,"fraud_Swift, Bradtke and Marquardt",grocery_net,34.74,F,Hahira,GA,30.9416,-83.3574,10295,"Teacher, special educational needs",31.112746,-83.999846
+2019-01-27 18:03,"fraud_Langworth, Boehm and Gulgowski",shopping_net,1.02,F,Grandview,TX,32.2779,-97.2351,5875,"Radiographer, therapeutic",31.588018,-96.642319
+2019-05-30 09:42,fraud_Dickinson-Rempel,misc_pos,4.61,M,Waukesha,WI,42.9993,-88.2196,95015,"Therapist, occupational",42.484946,-89.058926
+2019-09-22 01:15,fraud_Sporer Inc,gas_transport,67.52,M,Comfrey,MN,44.1111,-94.9134,914,Health and safety adviser,43.742883,-94.634388
