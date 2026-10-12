@@ -1,0 +1,4 @@
+table,rows,compressed_bytes,uncompressed_bytes,bytes_on_disk
+transactions_baseline,262144,20476261,48994457,20481609
+transactions,262144,10800509,32488363,10806944
+state_max,51,1445,3294,1696

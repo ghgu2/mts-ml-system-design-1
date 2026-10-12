@@ -1,0 +1,35 @@
+name: Homework 2
+
+on:
+  push:
+    paths: ["hw2/**", "docker-compose.hw2.yml", "examples/hw2_sample.csv", ".github/workflows/hw2.yml"]
+  pull_request:
+    paths: ["hw2/**", "docker-compose.hw2.yml", "examples/hw2_sample.csv", ".github/workflows/hw2.yml"]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate Compose configuration
+        run: docker compose -f docker-compose.hw2.yml config --quiet
+      - name: Unit tests
+        run: >-
+          docker compose -f docker-compose.hw2.yml run --build --no-deps --rm
+          -v ./hw2/tests:/app/tests:ro pipeline python -m unittest discover -s tests -v
+      - name: CSV to Kafka to ClickHouse, validation and benchmark
+        run: docker compose -f docker-compose.hw2.yml run --rm pipeline
+      - name: Monetary boundary cases through Kafka and ClickHouse
+        run: >-
+          HW2_DATA_DIR=./hw2/tests docker compose -f docker-compose.hw2.yml run --rm pipeline
+          python run_pipeline.py --csv /data/edge_cases.csv --output-dir /tmp/edge_cases --repeats 3
+      - name: Logs on failure
+        if: failure()
+        run: docker compose -f docker-compose.hw2.yml logs --tail 100
+      - name: Stop test services
+        if: always()
+        run: docker compose -f docker-compose.hw2.yml down -v

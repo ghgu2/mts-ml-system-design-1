@@ -1,0 +1,8 @@
+transaction_time,merch,cat_id,amount,name_1,name_2,gender,street,one_city,us_state,post_code,lat,lon,population_city,jobs,merchant_lat,merchant_lon
+2019-09-14 02:46,test_shop,grocery_net,10.10,Test,Person,F,Test Street,Test City,TX,00123,32.0,-97.0,1000,Engineer,32.1,-97.1
+2019-09-14 02:47,test_shop,shopping_net,10.10,Test,Person,F,Test Street,Test City,TX,00123,32.0,-97.0,1000,Engineer,32.1,-97.1
+2019-09-14 02:48,test_shop,misc_net,10.09,Test,Person,F,Test Street,Test City,TX,00123,32.0,-97.0,1000,Engineer,32.1,-97.1
+2019-09-14 02:49,test_shop,food_dining,9.99,Test,Person,F,Test Street,Test City,CA,00123,32.0,-97.0,1000,Engineer,32.1,-97.1
+2019-09-14 02:50,test_shop,gas_transport,0.00,Test,Person,F,Test Street,Test City,CA,00123,32.0,-97.0,1000,Engineer,32.1,-97.1
+2019-09-14 02:51,test_shop,shopping_pos,900719925474099.91,Test,Person,F,Test Street,Test City,NY,00123,32.0,-97.0,1000,Engineer,32.1,-97.1
+2019-09-14 02:52,test_shop,misc_pos,900719925474099.92,Test,Person,F,Test Street,Test City,NY,00123,32.0,-97.0,1000,Engineer,32.1,-97.1
