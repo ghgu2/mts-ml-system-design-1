@@ -1,0 +1,4 @@
+variant,repetitions,median_server_ms,median_http_ms,median_read_rows,median_read_bytes,median_memory_bytes
+baseline,21,20.016,20.557,262144,15866252,6546570
+optimized_storage,21,18.906,19.478,262144,8912896,6538477
+preaggregated,21,1.362,1.831,51,8321,6508174

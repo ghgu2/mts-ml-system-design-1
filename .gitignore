@@ -5,3 +5,6 @@ __pycache__/
 .env
 *.csv
 !examples/sample.csv
+!examples/hw2_sample.csv
+!hw2/tests/edge_cases.csv
+!hw2/results/**/*.csv

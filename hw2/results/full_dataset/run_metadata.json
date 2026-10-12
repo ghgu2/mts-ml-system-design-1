@@ -1,0 +1,13 @@
+{
+  "run_id": "bffd9b20-5234-4aba-b6db-695f463d335b",
+  "completed_at_utc": "2026-10-12T19:52:46.516875+00:00",
+  "dataset_file": "test.csv",
+  "dataset_sha256": "4129db5d9079f907d9a38aefc170f5e105a650a8273457aaae02a1f735516eac",
+  "limit": null,
+  "rows": 262144,
+  "states": 51,
+  "clickhouse_version": "25.8.33.6",
+  "architecture": "aarch64",
+  "repetitions": 21,
+  "validation": "passed: counts, unique source rows, three SQL results vs CSV reference"
+}
