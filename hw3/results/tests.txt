@@ -1,0 +1,17 @@
+test_all_graphs_parse_and_have_explicit_dependencies (test_dags.DagTests.test_all_graphs_parse_and_have_explicit_dependencies) ... [2026-10-21T19:15:25.868+0000] {dagbag.py:588} INFO - Filling up the DagBag from /opt/airflow/dags
+test_append_failure_rolls_back_rows_and_receipt (test_pipeline.PipelineTests.test_append_failure_rolls_back_rows_and_receipt) ... ok
+test_bootstrap_is_idempotent (test_pipeline.PipelineTests.test_bootstrap_is_idempotent) ... ok
+test_broken_bundle_or_pointer_keeps_previous_pair (test_pipeline.PipelineTests.test_broken_bundle_or_pointer_keeps_previous_pair) ... {
+test_fixed_window_time_split_and_same_month_after_error (test_pipeline.PipelineTests.test_fixed_window_time_split_and_same_month_after_error) ... ok
+test_hot_reload_changes_version_without_new_scorer (test_pipeline.PipelineTests.test_hot_reload_changes_version_without_new_scorer) ... {
+test_old_task_clear_cannot_roll_back_deployed_model (test_pipeline.PipelineTests.test_old_task_clear_cannot_roll_back_deployed_model) ... ok
+test_pointer_swap_crash_recovers_without_skipping_month (test_pipeline.PipelineTests.test_pointer_swap_crash_recovers_without_skipping_month) ... ok
+test_quality_report_survives_validation_failure (test_pipeline.PipelineTests.test_quality_report_survives_validation_failure) ... ok
+test_rejected_candidate_saved_but_never_published (test_pipeline.PipelineTests.test_rejected_candidate_saved_but_never_published) ... ok
+test_retention_preserves_unprocessed_window_and_then_catches_up (test_pipeline.PipelineTests.test_retention_preserves_unprocessed_window_and_then_catches_up) ... ok
+test_supply_retry_does_not_duplicate_or_skip_month (test_pipeline.PipelineTests.test_supply_retry_does_not_duplicate_or_skip_month) ... ok
+test_train_only_artifacts_and_unseen_categories (test_pipeline.PipelineTests.test_train_only_artifacts_and_unseen_categories) ... ok
+test_gate_rejects_any_decrease_and_nonfinite_metrics (test_pipeline.PureRulesTests.test_gate_rejects_any_decrease_and_nonfinite_metrics) ... ok
+test_month_end_and_leap_year (test_pipeline.PureRulesTests.test_month_end_and_leap_year) ... ok
+Ran 15 tests in 2.879s
+OK

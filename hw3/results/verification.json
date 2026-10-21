@@ -1,0 +1,96 @@
+{
+  "before": {
+    "transaction_id": "probe-771b9777de8e4ff2b2999ef0a3a223e0",
+    "score": 0.09518297044032116,
+    "fraud_flag": 0,
+    "model_version": "m201903"
+  },
+  "after": {
+    "transaction_id": "probe-ece0a3d36baf4c58bc54092867e71583",
+    "score": 0.04533315174404585,
+    "fraud_flag": 0,
+    "model_version": "m201908"
+  },
+  "decisions": [
+    {
+      "version": "m201905",
+      "incumbent_version": "m201903",
+      "test_month": "2019-05-01",
+      "test_rows": 2000,
+      "candidate": {
+        "average_precision": 0.3337947140326592,
+        "roc_auc": 0.9599616070204307,
+        "f1_at_0_98": 0.2857142857142857
+      },
+      "incumbent": {
+        "average_precision": 0.3706262536237453,
+        "roc_auc": 0.9280131633072809,
+        "f1_at_0_98": 0.16666666666666666
+      },
+      "accepted": false,
+      "reason": "ranking metric decreased"
+    },
+    {
+      "version": "m201906",
+      "incumbent_version": "m201903",
+      "test_month": "2019-06-01",
+      "test_rows": 2000,
+      "candidate": {
+        "average_precision": 0.47090686222555095,
+        "roc_auc": 0.9405747991967872,
+        "f1_at_0_98": 0.0
+      },
+      "incumbent": {
+        "average_precision": 0.6063700093665847,
+        "roc_auc": 0.9162901606425703,
+        "f1_at_0_98": 0.0
+      },
+      "accepted": false,
+      "reason": "ranking metric decreased"
+    },
+    {
+      "version": "m201907",
+      "incumbent_version": "m201903",
+      "test_month": "2019-07-01",
+      "test_rows": 10000,
+      "candidate": {
+        "average_precision": 0.6714187324368638,
+        "roc_auc": 0.9746453747662208,
+        "f1_at_0_98": 0.18181818181818182
+      },
+      "incumbent": {
+        "average_precision": 0.6876990729652441,
+        "roc_auc": 0.970339519493598,
+        "f1_at_0_98": 0.38202247191011235
+      },
+      "accepted": false,
+      "reason": "ranking metric decreased"
+    },
+    {
+      "version": "m201908",
+      "incumbent_version": "m201903",
+      "test_month": "2019-08-01",
+      "test_rows": 10000,
+      "candidate": {
+        "average_precision": 0.8533730442669486,
+        "roc_auc": 0.9978853403929856,
+        "f1_at_0_98": 0.5882352941176471
+      },
+      "incumbent": {
+        "average_precision": 0.7999826171850389,
+        "roc_auc": 0.9746091489210755,
+        "f1_at_0_98": 0.45714285714285713
+      },
+      "accepted": true,
+      "reason": "both ranking metrics did not decrease"
+    }
+  ],
+  "supply": {
+    "month": "2019-08-01",
+    "path": "/data/supply/2019-08-01.parquet",
+    "rows": 10000
+  },
+  "quality_run_id": "manual__verify_9586df47c00847edb50936e3c638fdf4",
+  "quality_report": "dq_b131cda6965a7145d448.html",
+  "hot_reload_verified": true
+}

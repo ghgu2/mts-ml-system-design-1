@@ -1,5 +1,28 @@
 # Домашние задания по MLOps
 
+## Задание 3: переобучение в Airflow
+
+Три DAG поставляют новые размеченные месяцы, переобучают CatBoost на скользящем окне и публикуют HTML-отчёты Data Quality. Новая модель попадает в скоринг только тогда, когда Average Precision и ROC-AUC на одном проверочном месяце не хуже действующей модели. Скоринг подхватывает модель и её препроцессинг без перезапуска и указывает `model_version` в Kafka.
+
+```bash
+docker compose up --build -d
+docker compose ps -a
+docker compose run --rm --no-deps verify
+```
+
+В репозитории уже есть размеченный пример из 12 000 строк. Для быстрого запуска не нужно скачивать датасет или устанавливать локальный Python. Нужен работающий Docker с Compose v2 и желательно 8 ГБ памяти для Docker.
+
+- [Airflow](http://localhost:8081) — `admin` / `admin`, DAG `retrain_fraud_model`, `supply_labeled_month`, `check_data_quality`.
+- [HTML-отчёты качества данных](http://localhost:8082).
+- [Kafka UI](http://localhost:18080) — топики `transactions` и `scoring`.
+- [Отправка своих транзакций](http://localhost:18501).
+- [Подробное описание, восстановление после ошибок и проверки](hw3/README.md).
+- [Результаты сквозного запуска и автоматических проверок](hw3/results/README.md).
+
+`verify` запускает настоящие DAG через API Airflow и отправляет пробные транзакции до и после смены модели. Результаты доступны на [странице проверки](http://localhost:8082/verification/). Копия проверенного запуска сохраняется в `hw3/results/`. Обработка в Kafka также идёт автоматически: симулятор отправляет одну транзакцию в секунду.
+
+ДЗ‑1 сохранено в `docker-compose.hw1.yml`, ДЗ‑2 — в `docker-compose.hw2.yml`. У ДЗ‑3 отдельное имя Compose-проекта `mlops-hw3`, тома и порты; предыдущие задания можно запускать независимо. Исходные состояния также доступны в коммитах `0152082` (ДЗ‑1) и `bed253c` (ДЗ‑2).
+
 ## Задание 2: Kafka → ClickHouse и оптимизация
 
 Решение пунктов 1–4 задания: отдельный Python producer загружает CSV в Kafka, ClickHouse получает поток через Kafka Engine и materialized view. SQL находит категорию **одной максимальной транзакции** по каждому штату. Оптимизированная схема использует словарное кодирование, сжатие, сортировку и предварительную агрегацию; результаты сверяются с исходным CSV.
@@ -34,14 +57,14 @@ docker compose -f docker-compose.hw2.yml run --build --rm pipeline
 Скачайте или клонируйте репозиторий и перейдите в его корневую папку. Затем выполните:
 
 ```bash
-docker compose up --build -d
-docker compose ps
+docker compose -f docker-compose.hw1.yml up --build -d
+docker compose -f docker-compose.hw1.yml ps
 ```
 
 Первый запуск скачает образы Kafka, Zookeeper и Python и соберёт два контейнера Python. Подождите, пока `kafka-setup` завершится с кодом `0`, а `fraud_detector` и `interface` перейдут в состояние `Up`. Логи:
 
 ```bash
-docker compose logs -f fraud_detector interface
+docker compose -f docker-compose.hw1.yml logs -f fraud_detector interface
 ```
 
 ## Проверка
@@ -52,7 +75,7 @@ docker compose logs -f fraud_detector interface
 4. Откройте [Kafka UI](http://localhost:8080), выберите топик `scoring` и посмотрите сообщения. Также можно получить одно сообщение командой:
 
 ```bash
-docker compose exec kafka kafka-console-consumer --bootstrap-server kafka:9092 --topic scoring --from-beginning --max-messages 1 --timeout-ms 15000
+docker compose -f docker-compose.hw1.yml exec kafka kafka-console-consumer --bootstrap-server kafka:9092 --topic scoring --from-beginning --max-messages 1 --timeout-ms 15000
 ```
 
 Пример результата:
@@ -66,7 +89,7 @@ docker compose exec kafka kafka-console-consumer --bootstrap-server kafka:9092 -
 Для остановки:
 
 ```bash
-docker compose down
+docker compose -f docker-compose.hw1.yml down
 ```
 
 ## Состав

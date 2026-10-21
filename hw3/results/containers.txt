@@ -1,0 +1,15 @@
+NAME                            IMAGE                             COMMAND                  SERVICE             CREATED          STATUS                      PORTS
+mlops-hw3-airflow-1             mlops-hw3-airflow:local           "/usr/bin/dumb-init …"   airflow             41 seconds ago   Up 27 seconds (healthy)     127.0.0.1:8081->8080/tcp
+mlops-hw3-airflow-init-1        mlops-hw3-airflow:local           "/usr/bin/dumb-init …"   airflow-init        41 seconds ago   Exited (0) 28 seconds ago
+mlops-hw3-airflow-scheduler-1   mlops-hw3-airflow:local           "/usr/bin/dumb-init …"   airflow-scheduler   41 seconds ago   Up 27 seconds (healthy)     8080/tcp
+mlops-hw3-bootstrap-1           mlops-hw3-airflow:local           "/usr/bin/dumb-init …"   bootstrap           41 seconds ago   Exited (0) 35 seconds ago
+mlops-hw3-fraud_detector-1      mlops-hw3-fraud_detector          "python app/app.py"      fraud_detector      41 seconds ago   Up 30 seconds
+mlops-hw3-interface-1           mlops-hw3-interface               "streamlit run app.p…"   interface           41 seconds ago   Up 30 seconds               127.0.0.1:18501->8501/tcp
+mlops-hw3-kafka-1               confluentinc/cp-kafka:7.3.0       "/etc/confluent/dock…"   kafka               41 seconds ago   Up 40 seconds (healthy)     9092/tcp, 127.0.0.1:19095->19095/tcp
+mlops-hw3-kafka-setup-1         confluentinc/cp-kafka:7.3.0       "/bin/bash -c 'set -…"   kafka-setup         41 seconds ago   Exited (0) 31 seconds ago
+mlops-hw3-kafka-ui-1            provectuslabs/kafka-ui:v0.7.2     "/bin/sh -c 'java --…"   kafka-ui            41 seconds ago   Up 34 seconds               127.0.0.1:18080->8080/tcp
+mlops-hw3-postgres-1            postgres:15.10                    "docker-entrypoint.s…"   postgres            41 seconds ago   Up 40 seconds (healthy)     5432/tcp
+mlops-hw3-reports-1             python:3.12-slim                  "python -m http.serv…"   reports             41 seconds ago   Up 40 seconds               127.0.0.1:8082->8082/tcp
+mlops-hw3-simulator-1           mlops-hw3-airflow:local           "/usr/bin/dumb-init …"   simulator           41 seconds ago   Up 30 seconds               8080/tcp
+mlops-hw3-volume-init-1         mlops-hw3-airflow:local           "/bin/bash -ec 'chow…"   volume-init         41 seconds ago   Exited (0) 40 seconds ago
+mlops-hw3-zookeeper-1           confluentinc/cp-zookeeper:7.3.0   "/etc/confluent/dock…"   zookeeper           41 seconds ago   Up 40 seconds               2181/tcp, 2888/tcp, 3888/tcp

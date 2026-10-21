@@ -1,0 +1,74 @@
+{
+  "cursor": {
+    "id": 1,
+    "next_month": "2019-09-01",
+    "window_months": 3,
+    "history_months": 36
+  },
+  "rows": 72000,
+  "current": {
+    "version": "m201908"
+  },
+  "python": "3.11.11",
+  "architecture": "aarch64",
+  "dag_runs": {
+    "retrain_fraud_model": [
+      [
+        "scheduled__2026-10-21T19:10:00+00:00",
+        "success"
+      ],
+      [
+        "manual__verify_80e219a4656e4da1bd3b2de2bbd1cd7d",
+        "success"
+      ],
+      [
+        "manual__verify_a197598050ac45448f36bf153a7ccd55",
+        "success"
+      ],
+      [
+        "manual__verify_c51f9d241b754c018a7adc76bada65da",
+        "success"
+      ],
+      [
+        "manual__verify_453fcfb134cb46bfa9d322163b9ca5b2",
+        "success"
+      ]
+    ],
+    "supply_labeled_month": [
+      [
+        "scheduled__2026-10-21T19:07:00+00:00",
+        "success"
+      ],
+      [
+        "manual__verify_615fbf938d8a438fa74a9ee6fe96fd80",
+        "success"
+      ],
+      [
+        "manual__verify_7a29b07159cf432bb98d8e0a65e20db2",
+        "success"
+      ],
+      [
+        "manual__verify_1c4d3437a1a84349b685838a3081b0fb",
+        "success"
+      ],
+      [
+        "manual__verify_b093faa0160841199b5881307242f820",
+        "success"
+      ],
+      [
+        "scheduled__2026-10-21T19:12:00+00:00",
+        "success"
+      ]
+    ],
+    "check_data_quality": [
+      [
+        "scheduled__2026-10-21T19:09:00+00:00",
+        "success"
+      ],
+      [
+        "manual__verify_9586df47c00847edb50936e3c638fdf4",
+        "success"
+      ]
+    ]
+  }
+}

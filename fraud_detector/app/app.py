@@ -9,8 +9,6 @@ from pathlib import Path
 from confluent_kafka import Consumer, Producer
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
-from preprocessing import load_artifacts, prepare_transaction
-from scorer import make_prediction
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 logger = logging.getLogger(__name__)
@@ -21,7 +19,15 @@ OUTPUT_TOPIC = os.getenv("KAFKA_SCORING_TOPIC", "scoring")
 
 
 def main():
-    artifacts = load_artifacts(Path(__file__).resolve().parents[1] / "models/preprocessing.json")
+    models_dir = os.getenv("MODELS_DIR")
+    versioned = None
+    if models_dir:
+        from model_registry import VersionedScorer
+        versioned = VersionedScorer(models_dir)
+    else:
+        from preprocessing import load_artifacts, prepare_transaction
+        from scorer import make_prediction
+        artifacts = load_artifacts(Path(__file__).resolve().parents[1] / "models/preprocessing.json")
     consumer = Consumer({
         "bootstrap.servers": BROKERS,
         "group.id": "ml-scorer",
@@ -42,13 +48,18 @@ def main():
             try:
                 payload = json.loads(message.value())
                 transaction_id = str(payload["transaction_id"])
-                features = prepare_transaction(payload["data"], artifacts)
-                score, fraud_flag = make_prediction(features)
+                if versioned:
+                    score, fraud_flag, model_version = versioned.predict(payload["data"])
+                else:
+                    features = prepare_transaction(payload["data"], artifacts)
+                    score, fraud_flag = make_prediction(features)
                 result = {
                     "transaction_id": transaction_id,
                     "score": score,
                     "fraud_flag": fraud_flag,
                 }
+                if versioned:
+                    result["model_version"] = model_version
                 delivery_errors = []
                 producer.produce(
                     OUTPUT_TOPIC,

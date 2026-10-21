@@ -1,0 +1,12 @@
+{
+  "cursor": {
+    "id": 1,
+    "next_month": "2019-09-01",
+    "window_months": 3,
+    "history_months": 36
+  },
+  "rows": 72000,
+  "current": {
+    "version": "m201908"
+  }
+}

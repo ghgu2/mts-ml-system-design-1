@@ -1,0 +1,7 @@
+fraud_detector-1  | 2026-10-21 19:15:38,280 INFO Loaded model version m201903
+fraud_detector-1  | 2026-10-21 19:15:46,253 INFO Scored probe-771b9777de8e4ff2b2999ef0a3a223e0: 0.09518, fraud_flag=0
+fraud_detector-1  | 2026-10-21 19:16:13,242 INFO Scored probe-1d217cf9404a49b58d4c98433127826a: 0.09518, fraud_flag=0
+fraud_detector-1  | 2026-10-21 19:16:29,963 INFO Scored probe-3e877fd217054074b432f31ee40105ca: 0.09518, fraud_flag=0
+fraud_detector-1  | 2026-10-21 19:16:45,992 INFO Scored probe-dd94ed31f291413baa2bd1c80ea34e11: 0.09518, fraud_flag=0
+fraud_detector-1  | 2026-10-21 19:17:01,772 INFO Loaded model version m201908
+fraud_detector-1  | 2026-10-21 19:17:02,769 INFO Scored probe-ece0a3d36baf4c58bc54092867e71583: 0.04533, fraud_flag=0

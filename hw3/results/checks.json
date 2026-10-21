@@ -1,0 +1,7 @@
+{
+  "state_preserved_after_restart": true,
+  "source_sample_sha256": "2abbd479e2a01f885b4a40a7875d9d88b3002409dcaf3179c555ad2091d1b4a8",
+  "container_unit_tests": 15,
+  "hw2_regression_tests": 5,
+  "legacy_inference_verified": true
+}
