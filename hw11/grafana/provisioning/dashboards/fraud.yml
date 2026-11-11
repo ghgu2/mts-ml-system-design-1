@@ -1,0 +1,9 @@
+apiVersion: 1
+
+providers:
+  - name: hw11
+    folder: Антифрод
+    type: file
+    updateIntervalSeconds: 15
+    options:
+      path: /var/lib/grafana/dashboards

@@ -1,0 +1,103 @@
+name: mlops-hw11
+
+services:
+  airflow:
+    ports: !override ["127.0.0.1:18081:8080"]
+
+  reports:
+    ports: !override ["127.0.0.1:18082:8082"]
+
+  kafka:
+    ports: !override ["127.0.0.1:29095:19095"]
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29095
+
+  interface:
+    ports: !override ["127.0.0.1:28501:8501"]
+
+  kafka-ui:
+    ports: !override ["127.0.0.1:28080:8080"]
+
+  fraud_detector:
+    build:
+      context: ./fraud_detector
+      target: monitored
+    environment:
+      SCORING_METRICS_PORT: "8000"
+
+  scores-init:
+    image: postgres:15.10
+    environment:
+      PGHOST: postgres
+      PGUSER: airflow
+      PGPASSWORD: airflow
+      PGDATABASE: airflow
+      HW11_WRITER_PASSWORD: ${HW11_WRITER_PASSWORD:-local-scores-writer}
+      HW11_READER_PASSWORD: ${HW11_READER_PASSWORD:-local-scores-reader}
+    command: ["psql", "-X", "-v", "ON_ERROR_STOP=1", "-f", "/init-scores.sql"]
+    volumes:
+      - ./hw11/postgres/init.sql:/init-scores.sql:ro
+    depends_on:
+      postgres: {condition: service_healthy}
+    networks: [ml-scorer]
+
+  scoring_writer:
+    build: ./hw11/scoring_writer
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      KAFKA_SCORING_TOPIC: scoring
+      PGHOST: postgres
+      PGDATABASE: fraud_monitoring
+      PGUSER: scores_writer
+      PGPASSWORD: ${HW11_WRITER_PASSWORD:-local-scores-writer}
+      PGCONNECT_TIMEOUT: "5"
+    depends_on:
+      kafka-setup: {condition: service_completed_successfully}
+      scores-init: {condition: service_completed_successfully}
+    networks: [ml-scorer]
+    restart: unless-stopped
+
+  node_exporter:
+    image: prom/node-exporter:v1.9.1
+    pid: host
+    command: ["--path.rootfs=/host"]
+    volumes:
+      - /:/host:ro,rslave
+    networks: [ml-scorer]
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:v3.5.1
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --storage.tsdb.retention.time=3d
+    volumes:
+      - ./hw11/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    ports: ["127.0.0.1:9090:9090"]
+    networks: [ml-scorer]
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:12.3.3
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: ${HW11_GRAFANA_PASSWORD:-fraud-local}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /var/lib/grafana/dashboards/scoring.json
+      HW11_READER_PASSWORD: ${HW11_READER_PASSWORD:-local-scores-reader}
+    volumes:
+      - ./hw11/grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./hw11/grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - grafana_data:/var/lib/grafana
+    ports: ["127.0.0.1:3000:3000"]
+    depends_on:
+      scores-init: {condition: service_completed_successfully}
+      prometheus: {condition: service_started}
+    networks: [ml-scorer]
+    restart: unless-stopped
+
+volumes:
+  grafana_data:
+  prometheus_data:

@@ -1,0 +1,237 @@
+{
+  "uid": "hw11-writer",
+  "title": "Запись результатов",
+  "tags": [
+    "Антифрод",
+    "ДЗ 11"
+  ],
+  "schemaVersion": 41,
+  "timezone": "browser",
+  "editable": true,
+  "graphTooltip": 1,
+  "time": {
+    "from": "now-15m",
+    "to": "now"
+  },
+  "refresh": "5s",
+  "templating": {
+    "list": []
+  },
+  "links": [
+    {
+      "title": "Дашборды антифрода",
+      "type": "dashboards",
+      "asDropdown": true,
+      "tags": [
+        "Антифрод"
+      ],
+      "includeVars": false,
+      "keepTime": true
+    }
+  ],
+  "panels": [
+    {
+      "title": "Скорость записи в PostgreSQL",
+      "type": "timeseries",
+      "description": "",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "hw11-prometheus"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 12,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "hw11-prometheus"
+          },
+          "expr": "sum(rate(fraud_writer_scores_written_total[30s]))",
+          "legendFormat": "Сохранено",
+          "format": "time_series",
+          "range": true
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "tps",
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 10
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "id": 1
+    },
+    {
+      "title": "Время записи результата",
+      "type": "timeseries",
+      "description": "",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "hw11-prometheus"
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 0,
+        "w": 12,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "hw11-prometheus"
+          },
+          "expr": "histogram_quantile(0.5, sum by (le) (rate(fraud_writer_write_seconds_bucket[30s])))",
+          "legendFormat": "p50",
+          "format": "time_series",
+          "range": true
+        },
+        {
+          "refId": "B",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "hw11-prometheus"
+          },
+          "expr": "histogram_quantile(0.95, sum by (le) (rate(fraud_writer_write_seconds_bucket[30s])))",
+          "legendFormat": "p95",
+          "format": "time_series",
+          "range": true
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s",
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 10
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "id": 2
+    },
+    {
+      "title": "Число фродовых флагов за 1 минуту",
+      "type": "timeseries",
+      "description": "",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "hw11-prometheus"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 8,
+        "w": 8,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "hw11-prometheus"
+          },
+          "expr": "sum(increase(fraud_writer_flagged_written_total[1m]))",
+          "legendFormat": "Фрод",
+          "format": "time_series",
+          "range": true
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short",
+          "custom": {
+            "lineWidth": 2,
+            "fillOpacity": 10
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "id": 3
+    },
+    {
+      "title": "Распределение записанных скоров",
+      "type": "heatmap",
+      "description": "Число скоров в каждом интервале значений за последние 30 секунд.",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "hw11-prometheus"
+      },
+      "gridPos": {
+        "x": 8,
+        "y": 8,
+        "w": 16,
+        "h": 8
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "prometheus",
+            "uid": "hw11-prometheus"
+          },
+          "expr": "sum by (le) (increase(fraud_writer_score_bucket{le!=\"+Inf\"}[30s]))",
+          "legendFormat": "{{le}}",
+          "format": "heatmap",
+          "range": true
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
+      "options": {
+        "calculate": false,
+        "yAxis": {
+          "axisLabel": "Скор",
+          "axisPlacement": "left",
+          "min": 0,
+          "max": 1
+        },
+        "color": {
+          "mode": "scheme",
+          "scheme": "Oranges",
+          "fill": "dark-orange",
+          "steps": 32
+        },
+        "tooltip": {
+          "show": true
+        },
+        "legend": {
+          "show": true
+        }
+      },
+      "id": 4
+    }
+  ]
+}
